@@ -1,4 +1,4 @@
-"""Proyecto_final URL Configuration
+"""AppMiembro URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -14,22 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from Proyecto_final.views import saludar
-from Proyecto_final.views import segunda_vista
-from Proyecto_final.views import *
+from django.urls import path , include
+from AppMiembro.views import saludar
+from AppMiembro.views import segunda_vista
+from AppMiembro.views import *
 from AppMiembro.views import familiar
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("saludar/", saludar),
-    path("segunda_vista/",segunda_vista),
-    path("dia/",dia_de_hoy),
-    path("saludo/<nombre>",saludo_con_nombre),
-    path("anio/<edad>",calcula_anio_nacimiento),
-    path("sitio/",Sitio_web),
-    path("miembro/",familiar),
-    path("Sitio_web2/",Sitio_web2),
+    path("AppMiembro/", include("AppMiembro.urls"))
 
 ]
