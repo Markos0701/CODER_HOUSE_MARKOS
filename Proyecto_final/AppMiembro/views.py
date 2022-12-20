@@ -2,8 +2,6 @@ from django.shortcuts import render
 from .models import Miembro
 from django.http import HttpResponse
 from datetime import datetime 
-
-from django.http import HttpResponse
 import datetime
 from django.template import Template, Context
 from django.template import loader
@@ -13,7 +11,7 @@ from django.template import loader
 
 def familiar(request):
 
-    familiar_nuevo= Miembro(nombre="Karina", apellido= "Mavarez",edad=30, afinidad= "hermana", fecha_nacimiento= datetime(1992, 3, 19))
+    familiar_nuevo= Miembro(nombre="Karina", apellido= "Mavarez",edad=30, afinidad= "hermana", fecha_nacimiento= datetime.date(1992, 3, 19))
     familiar_nuevo.save()
     cadena_texto= f"Familiar Guardado: Nombre: {familiar_nuevo.nombre}  ,__Apellido: {familiar_nuevo.apellido}  ,__Edad: {familiar_nuevo.edad}  ,__afinidad: {familiar_nuevo.afinidad}  ,__fecha: {familiar_nuevo.fecha_nacimiento}"
     return HttpResponse(cadena_texto)
