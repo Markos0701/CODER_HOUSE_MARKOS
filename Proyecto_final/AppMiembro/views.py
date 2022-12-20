@@ -5,6 +5,7 @@ from datetime import datetime
 import datetime
 from django.template import Template, Context
 from django.template import loader
+from django.template import RequestContext
 
 
 # Create your views here.
@@ -28,31 +29,13 @@ def calcula_anio_nacimiento(request,edad):
     anio_nacimiento= anio_actual - int(edad)
     return HttpResponse(f"<h1> Usted nacio en el año{anio_nacimiento}<h1>")
 
-"""
-def Sitio_web(request):
-
-    diccionario={"nombre":"Markos","apellido":"Mavarez","edad":str(28),"lista_de_notas":[10,9,5,7,8]}
-
-    archivo=open("C:/Users/PC_ITF-QUILMES/Downloads/Curso_Python/git_repos/Proyecto_final/Templates/template1.html")
-    template=Template(archivo.read())
-    archivo.close()
-    contexto=Context(diccionario)
-    documento= template.render(contexto)
-    
-    return HttpResponse(documento)
-"""
+# FUNCIONES DE BASE DE DATOS
 
 def Principal(request):
     teste={"Hola":"Markos"}
     template2= loader.get_template("principal.html")
     documento2= template2.render(teste)
     return HttpResponse(documento2)
-
-def Familiar_site(request):
-    teste={"Hola":"Markos"}
-    template= loader.get_template("familiar.html")
-    documento= template.render(teste)
-    return HttpResponse(documento)
 
 def Colaboradores_site(request):
     teste={"Hola":"Markos"}
@@ -84,3 +67,22 @@ def Ing_colaborador(request):
     colaborador_nuevo.save()
     cadena_texto= f"colaborador Guardado: Nombre: {colaborador_nuevo.nombre}  ,__Apellido: {colaborador_nuevo.apellido}  ,__dni: {colaborador_nuevo.dni}  ,__cargo: {colaborador_nuevo.cargo}  ,__fecha_ingreso: {colaborador_nuevo.fecha_ingreso}"
     return HttpResponse(cadena_texto)
+
+
+# ingreso desde formularios
+
+def Familiar_site(request):
+    if request.method=="POST":
+        nombre=request.POST["nombre"]
+        apellido=request.POST["apellido"]
+        edad=request.POST["edad"]
+        afinidad=request.post["afi nidad"]
+        fecha_nacimiento=request.post["fecha_nacimiento"]
+        familiar_nuevo= Miembro(nombre= nombre, apellido= apellido,edad=30, afinidad= afinidad, fecha_nacimiento= datetime.date(1995, 12, 25))
+        familiar_nuevo.save()
+        return render(request,"familiar.html",{"mensaje":"Familiar guardado Correctamente"})
+    else:
+        teste={"Hola":"Markos"}
+        template= loader.get_template("familiar.html")
+        documento= template.render(teste)
+        return HttpResponse(documento)   
