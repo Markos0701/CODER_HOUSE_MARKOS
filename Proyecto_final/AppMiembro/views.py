@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Miembro
+from .models import Miembro,Colaborador
 from django.http import HttpResponse
 from datetime import datetime 
 import datetime
@@ -9,14 +9,6 @@ from django.template import loader
 
 # Create your views here.
 
-def familiar(request):
-
-    familiar_nuevo= Miembro(nombre="Karina", apellido= "Mavarez",edad=30, afinidad= "hermana", fecha_nacimiento= datetime.date(1992, 3, 19))
-    familiar_nuevo.save()
-    cadena_texto= f"Familiar Guardado: Nombre: {familiar_nuevo.nombre}  ,__Apellido: {familiar_nuevo.apellido}  ,__Edad: {familiar_nuevo.edad}  ,__afinidad: {familiar_nuevo.afinidad}  ,__fecha: {familiar_nuevo.fecha_nacimiento}"
-    return HttpResponse(cadena_texto)
-
-    
 def saludar(request):
     return HttpResponse("hola mundo!")
 
@@ -49,8 +41,24 @@ def Sitio_web(request):
     
     return HttpResponse(documento)
 """
-def Inicio(request):
-    return HttpResponse("¡Inicio!")
+
+def Principal(request):
+    teste={"Hola":"Markos"}
+    template2= loader.get_template("principal.html")
+    documento2= template2.render(teste)
+    return HttpResponse(documento2)
+
+def Familiar_site(request):
+    teste={"Hola":"Markos"}
+    template= loader.get_template("familiar.html")
+    documento= template.render(teste)
+    return HttpResponse(documento)
+
+def Colaboradores_site(request):
+    teste={"Hola":"Markos"}
+    template= loader.get_template("Colaborador.html")
+    documento= template.render(teste)
+    return HttpResponse(documento)
 
 def Sitio_web(request):
 
@@ -59,8 +67,20 @@ def Sitio_web(request):
     documento= template.render(diccionario)
     return HttpResponse(documento)
 
-def Sitio_web2(request):
-    teste={"Hola":"Markos"}
-    template2= loader.get_template("template2.html")
-    documento2= template2.render(teste)
-    return HttpResponse(documento2)
+
+
+# Ingresos de datos a DB 
+
+def familiar(request):
+
+    familiar_nuevo= Miembro(nombre="enmanuel", apellido= "Mavarez",edad=30, afinidad= "hermano", fecha_nacimiento= datetime.date(1995, 12, 25))
+    familiar_nuevo.save()
+    cadena_texto= f"Familiar Guardado: Nombre: {familiar_nuevo.nombre}  ,__Apellido: {familiar_nuevo.apellido}  ,__Edad: {familiar_nuevo.edad}  ,__afinidad: {familiar_nuevo.afinidad}  ,__fecha: {familiar_nuevo.fecha_nacimiento}"
+    return HttpResponse(cadena_texto)
+
+def Ing_colaborador(request):
+
+    colaborador_nuevo= Colaborador(nombre="enmanuel", apellido= "Mavarez",dni=95711470, cargo= "programador", fecha_ingreso= datetime.date(2014, 12, 25))
+    colaborador_nuevo.save()
+    cadena_texto= f"colaborador Guardado: Nombre: {colaborador_nuevo.nombre}  ,__Apellido: {colaborador_nuevo.apellido}  ,__dni: {colaborador_nuevo.dni}  ,__cargo: {colaborador_nuevo.cargo}  ,__fecha_ingreso: {colaborador_nuevo.fecha_ingreso}"
+    return HttpResponse(cadena_texto)
