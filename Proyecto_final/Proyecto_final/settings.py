@@ -56,7 +56,7 @@ ROOT_URLCONF = 'Proyecto_final.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["C:/Users/PC_ITF-QUILMES/Downloads/Curso_Python/git_repos/Proyecto_final/Templates"],
+        'DIRS': ["C:/Users/PC_ITF-QUILMES/Downloads/Curso_Python/git_repos/Proyecto_final/AppMiembro/Templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
