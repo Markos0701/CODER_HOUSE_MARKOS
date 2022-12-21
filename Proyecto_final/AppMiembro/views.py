@@ -95,7 +95,20 @@ def Familiar_site(request):
 @csrf_exempt
 def Colaborador_site(request):
     if request.method=="POST":
-        pass
+        formulario= ColaboradorForm(request.POST)
+        if formulario.is_valid():
+            info=formulario.cleaned_data
+            nombre=info["nombre"]
+            apellido=info["apellido"]
+            dni=info["dni"]
+            cargo=info["cargo"]
+            fecha_ingreso=info["fecha_ingreso"]
+            colaborador= Colaborador(nombre= nombre, apellido= apellido,dni=dni,cargo= cargo,fecha_ingreso= fecha_ingreso)
+            colaborador.save()
+            return render(request,"Principal.html" ,{"mensaje":"colaborador editado correctamente"})
+        else:
+            return render(request,"principal.html" ,{"mensaje":"La informacion del colaborador ingresada no es valida "})
+
     else:
         formulario= ColaboradorForm()
-        return render (request, "Colaborador.html", {"form_colaborador": formulario})     
+        return render (request, "Colaborador_form.html", {"form_colaborador": formulario})     
