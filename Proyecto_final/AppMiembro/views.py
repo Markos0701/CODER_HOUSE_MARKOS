@@ -2,10 +2,14 @@ from django.shortcuts import render
 from .models import Miembro,Colaborador
 from django.http import HttpResponse
 from datetime import datetime 
+from django.urls import reverse_lazy
 import datetime
 from django.template import Template, Context
 from django.template import loader
 from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
+from .forms import ColaboradorForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
 # Create your views here.
@@ -71,18 +75,27 @@ def Ing_colaborador(request):
 
 # ingreso desde formularios
 
+@csrf_exempt
 def Familiar_site(request):
     if request.method=="POST":
         nombre=request.POST["nombre"]
         apellido=request.POST["apellido"]
         edad=request.POST["edad"]
-        afinidad=request.post["afi nidad"]
-        fecha_nacimiento=request.post["fecha_nacimiento"]
-        familiar_nuevo= Miembro(nombre= nombre, apellido= apellido,edad=30, afinidad= afinidad, fecha_nacimiento= datetime.date(1995, 12, 25))
+        afinidad=request.POST["afinidad"]
+        fecha_nacimiento=request.POST["fecha_nacimiento"]
+        familiar_nuevo= Miembro(nombre= nombre, apellido= apellido,edad=edad, afinidad= afinidad, fecha_nacimiento= fecha_nacimiento)
         familiar_nuevo.save()
-        return render(request,"familiar.html",{"mensaje":"Familiar guardado Correctamente"})
+        return render(request,"Principal.html",{"mensaje":"Familiar guardado Correctamente"})
     else:
         teste={"Hola":"Markos"}
         template= loader.get_template("familiar.html")
         documento= template.render(teste)
-        return HttpResponse(documento)   
+        return HttpResponse(documento) 
+
+@csrf_exempt
+def Colaborador_site(request):
+    if request.method=="POST":
+        pass
+    else:
+        formulario= ColaboradorForm()
+        return render (request, "Colaborador.html", {"form_colaborador": formulario})     

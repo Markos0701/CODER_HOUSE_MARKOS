@@ -11,12 +11,12 @@
 
     <h1> INGRESO DE FAMILIARES </h1> 
 
-    <form action="" method="POST">{% csrf_token %}
+    <form action="{% url 'Familiar_site' %}" method="POST">{% csrf_token %}
         <p>Nombre del familiar: <input type="text" name="nombre"> </p>
         <p>Apellido del familiar: <input type="text" name="apellido"> </p>
-        <p>Edad del familia: <input type="int" name="edad"> </p>
+        <p>Edad del familia: <input type="number" name="edad"> </p>
         <p>Afinidad del familia: <input type="text" name="afinidad"> </p>
-        <p>Fecha de nacimiento del familia: <input type="text" name="fecha_nacimiento"> </p>
+        <p>Fecha de nacimiento del familia: <input type="date" name="fecha_nacimiento"> </p>
         <input type="submit" value="Guardar Familiar">
     </form>
     

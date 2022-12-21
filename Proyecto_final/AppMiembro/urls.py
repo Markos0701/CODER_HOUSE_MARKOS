@@ -12,6 +12,8 @@ urlpatterns=[
     path("Sitio_principal/",Principal,name="Sitio_principal"),
     path("sitio/",Sitio_web,name="Sitio_web"),
     path("Colaboradores_site/",Colaboradores_site,name="Colaboradores_site"),
+    path("Colaborador_site/",Colaborador_site,name="Colaborador_site"),
+
     path("Familiar_site/",Familiar_site,name="Familiar_site"),
     
     #ingresos a la bas de datos
