@@ -1,14 +1,14 @@
 from django.shortcuts import render
-from .models import Miembro,Colaborador
+from .models import Miembro,Colaborador,Producto
 from django.http import HttpResponse
-from datetime import datetime 
+from datetime import datetime,date
 from django.urls import reverse_lazy
 import datetime
 from django.template import Template, Context
 from django.template import loader
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
-from .forms import ColaboradorForm
+from .forms import ColaboradorForm, ProductoForm
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
@@ -72,6 +72,14 @@ def Ing_colaborador(request):
     cadena_texto= f"colaborador Guardado: Nombre: {colaborador_nuevo.nombre}  ,__Apellido: {colaborador_nuevo.apellido}  ,__dni: {colaborador_nuevo.dni}  ,__cargo: {colaborador_nuevo.cargo}  ,__fecha_ingreso: {colaborador_nuevo.fecha_ingreso}"
     return HttpResponse(cadena_texto)
 
+def Ing_producto(request):
+
+    producto_nuevo= Producto(nombre="Cera", marca= "barshop",codigo= 95711470, cantidad= 5, fecha_registro= datetime.date(2014, 12, 25))
+    producto_nuevo.save()
+    cadena_texto= f"Producto Guardado: Nombre: {producto_nuevo.nombre}  ,__Marca: {producto_nuevo.marca}  ,__dni: {producto_nuevo.codigo}  ,__cargo: {producto_nuevo.cantidad}  ,__fecha_registro: {producto_nuevo.fecha_registro}"
+    return HttpResponse(cadena_texto)
+    
+
 
 # ingreso desde formularios
 
@@ -111,4 +119,39 @@ def Colaborador_site(request):
 
     else:
         formulario= ColaboradorForm()
-        return render (request, "Colaborador_form.html", {"form_colaborador": formulario})     
+        return render (request, "Colaborador_form.html", {"form_colaborador": formulario})    
+
+    
+@csrf_exempt
+def Producto_site(request):
+    if request.method=="POST":
+        formulario= ProductoForm(request.POST)
+        if formulario.is_valid():
+            info=formulario.cleaned_data
+            nombre=info["nombre"]
+            marca=info["marca"]
+            codigo=info["codigo"]
+            cantidad=info["cantidad"]
+            producto= Producto(nombre= nombre, marca= marca,codigo=codigo ,cantidad= cantidad)
+            producto.save()
+            return render(request,"Principal.html" ,{"mensaje":"Producto ingresado correctamente"})
+        else:
+            return render(request,"principal.html" ,{"mensaje":"La informacion del Producto ingresada no es valida "})
+
+    else:
+        formulario= ProductoForm()
+        return render (request, "Producto_form.html", {"ProductoForm": formulario})     
+
+
+# busqueda en la base de datos  /Producto_Busqueda
+
+@csrf_exempt
+def Producto_Busqueda(request):
+
+    nombre= request.GET["PRODUCTO"]
+
+    if nombre!="":
+            productos= Producto.objects.filter(nombre=nombre)
+            return render(request, "Productos_lista.html", {"productos":productos})
+    else:
+            return render(request, "Producto_form.html", {"mensaje":"! Ingrese una producto ¡"})

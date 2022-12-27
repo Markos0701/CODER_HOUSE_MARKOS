@@ -23,5 +23,13 @@ class Colaborador(models.Model):
     def __str__(self) -> str:
         return f"{self.nombre} - {self.cargo}"
     
-#models.DateField(null=True)
+class Producto(models.Model):
+    nombre= models.CharField(max_length=50)
+    marca= models.CharField(max_length=50)
+    codigo= models.IntegerField()
+    cantidad= models.IntegerField()
+    fecha_registro= models.DateField(null=True, blank=True)
+    
+    def __str__(self) -> str:
+        return f"{self.nombre} - {self.marca}"
     

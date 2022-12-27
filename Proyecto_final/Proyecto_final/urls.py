@@ -23,6 +23,6 @@ from AppMiembro.views import familiar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("AppMiembro/", include("AppMiembro.urls"))
-
+    path("AppMiembro/", include("AppMiembro.urls")),
+    path("", include("AppMiembro.urls"))
 ]
